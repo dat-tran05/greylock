@@ -271,6 +271,47 @@ document.addEventListener("DOMContentLoaded", () => {
   populateDropdown(document.getElementById("priority"), SCENARIO.fields.priority.options);
   document.getElementById("ticket-form").addEventListener("submit", handleSubmit);
 });
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function revealStaffScreen() {
+  const container = document.getElementById("staff-content");
+  if (!lastSubmission) {
+    container.innerHTML = "<p>No submission yet.</p>";
+    showScreen("staff");
+    return;
+  }
+  const { submission, graded, ticketNumber } = lastSubmission;
+  const rows = FIELD_LABELS.map(({ key, label }) => {
+    const correctDisplay = CORRECT_DISPLAY[key] || SCENARIO.fields[key].correct;
+    const pass = graded.results[key];
+    const submittedValue = submission[key] && submission[key].trim() ? submission[key] : "(blank)";
+    return `<tr><td>${label}</td><td>${escapeHtml(submittedValue)}</td><td>${escapeHtml(correctDisplay)}</td><td>${pass ? "✓" : "✗"}</td></tr>`;
+  }).join("");
+  const recommendation = graded.score >= 4
+    ? '<div class="banner approve">APPROVE — hand over a ticket</div>'
+    : '<div class="banner deny">DENY — close but not quite</div>';
+  container.innerHTML = `
+    <p>Ticket #${ticketNumber} — Score: ${graded.score}/5</p>
+    <table>
+      <tr><th>Field</th><th>Submitted</th><th>Correct</th><th></th></tr>
+      ${rows}
+    </table>
+    ${recommendation}
+  `;
+  showScreen("staff");
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.ctrlKey && event.shiftKey && event.key.toUpperCase() === "R") {
+    event.preventDefault();
+    revealStaffScreen();
+  }
+});
 </script>
 </body>
 </html>
