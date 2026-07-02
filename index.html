@@ -199,6 +199,78 @@ function gradeSubmission(submission) {
   const score = Object.values(results).filter(Boolean).length;
   return { results, score };
 }
+
+let lastSubmission = null;
+
+function showScreen(name) {
+  document.getElementById("screen-entry").hidden = name !== "entry";
+  document.getElementById("screen-submitted").hidden = name !== "submitted";
+  document.getElementById("screen-staff").hidden = name !== "staff";
+  document.getElementById("titlebar-text").textContent =
+    name === "staff" ? "TriageOS 3.1 — Staff Review" : "TriageOS 3.1 — New Ticket";
+}
+
+function populateDropdown(selectEl, options) {
+  selectEl.innerHTML = "";
+  const blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = "-- select --";
+  selectEl.appendChild(blank);
+  options.forEach(opt => {
+    const optionEl = document.createElement("option");
+    optionEl.value = opt;
+    optionEl.textContent = opt;
+    selectEl.appendChild(optionEl);
+  });
+}
+
+function animateProgress(onComplete) {
+  const fill = document.getElementById("progress-fill");
+  let pct = 0;
+  const interval = setInterval(() => {
+    pct += 10;
+    fill.style.width = pct + "%";
+    if (pct >= 100) {
+      clearInterval(interval);
+      onComplete();
+    }
+  }, 120);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  const submission = {
+    requesterName: document.getElementById("requesterName").value,
+    department: document.getElementById("department").value,
+    issueCategory: document.getElementById("issueCategory").value,
+    priority: document.getElementById("priority").value,
+    officeAddress: document.getElementById("officeAddress").value
+  };
+  const graded = gradeSubmission(submission);
+  const ticketNumber = String(Math.floor(1000 + Math.random() * 9000));
+  lastSubmission = { submission, graded, ticketNumber };
+
+  document.getElementById("processing-text").hidden = false;
+  document.getElementById("progress-bar").hidden = false;
+  document.getElementById("progress-fill").style.width = "0%";
+  document.getElementById("submitted-text").hidden = true;
+  showScreen("submitted");
+
+  animateProgress(() => {
+    document.getElementById("processing-text").hidden = true;
+    document.getElementById("progress-bar").hidden = true;
+    const submittedText = document.getElementById("submitted-text");
+    submittedText.hidden = false;
+    submittedText.textContent = `Ticket #${ticketNumber} submitted. Please see support staff.`;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  populateDropdown(document.getElementById("department"), SCENARIO.fields.department.options);
+  populateDropdown(document.getElementById("issueCategory"), SCENARIO.fields.issueCategory.options);
+  populateDropdown(document.getElementById("priority"), SCENARIO.fields.priority.options);
+  document.getElementById("ticket-form").addEventListener("submit", handleSubmit);
+});
 </script>
 </body>
 </html>
