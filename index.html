@@ -137,11 +137,22 @@
     </div>
   </div>
 <script>
-// Staff briefing (not shown to visitors): Priya Shah from Finance is working
-// from a downtown branch office. Her laptop can't connect to the VPN, which
-// is blocking her from submitting quarterly numbers before today's deadline.
-// She's already restarted her laptop twice — no luck. Everyone else at her
-// branch is fine; it's just her connection.
+// STAFF RUNBOOK (not shown to visitors):
+//
+// Scenario to roleplay: Priya Shah from Finance is working from a downtown
+// branch office. Her laptop can't connect to the VPN, which is blocking her
+// from submitting quarterly numbers before today's deadline. She's already
+// restarted her laptop twice — no luck. Everyone else at her branch is fine;
+// it's just her connection.
+//
+// Flow: talk through the scenario with the visitor -> they fill out the
+// ticket on screen -> they submit -> press Alt+Shift+R to reveal the graded
+// answer key (staff-only) -> decide whether to hand over a prize ticket ->
+// click "New Ticket" before the next visitor approaches (this also hides
+// the answer key, which stays on screen until you do).
+//
+// Recommendation shown on reveal: score >= 4/5 suggests APPROVE, <= 3/5
+// suggests DENY — it's a suggestion only, you always make the final call.
 
 const SCENARIO = {
   fields: {
@@ -224,14 +235,20 @@ function populateDropdown(selectEl, options) {
   });
 }
 
+let progressIntervalId = null;
+
 function animateProgress(onComplete) {
+  if (progressIntervalId !== null) {
+    clearInterval(progressIntervalId);
+  }
   const fill = document.getElementById("progress-fill");
   let pct = 0;
-  const interval = setInterval(() => {
+  progressIntervalId = setInterval(() => {
     pct += 10;
     fill.style.width = pct + "%";
     if (pct >= 100) {
-      clearInterval(interval);
+      clearInterval(progressIntervalId);
+      progressIntervalId = null;
       onComplete();
     }
   }, 120);
@@ -271,6 +288,10 @@ document.addEventListener("DOMContentLoaded", () => {
   populateDropdown(document.getElementById("priority"), SCENARIO.fields.priority.options);
   document.getElementById("ticket-form").addEventListener("submit", handleSubmit);
   document.getElementById("new-ticket-btn").addEventListener("click", () => {
+    if (progressIntervalId !== null) {
+      clearInterval(progressIntervalId);
+      progressIntervalId = null;
+    }
     document.getElementById("ticket-form").reset();
     lastSubmission = null;
     showScreen("entry");
@@ -312,7 +333,7 @@ function revealStaffScreen() {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.ctrlKey && event.shiftKey && event.key.toUpperCase() === "R") {
+  if (event.altKey && event.shiftKey && event.key.toUpperCase() === "R") {
     event.preventDefault();
     revealStaffScreen();
   }
