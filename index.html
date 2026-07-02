@@ -270,6 +270,11 @@ document.addEventListener("DOMContentLoaded", () => {
   populateDropdown(document.getElementById("issueCategory"), SCENARIO.fields.issueCategory.options);
   populateDropdown(document.getElementById("priority"), SCENARIO.fields.priority.options);
   document.getElementById("ticket-form").addEventListener("submit", handleSubmit);
+  document.getElementById("new-ticket-btn").addEventListener("click", () => {
+    document.getElementById("ticket-form").reset();
+    lastSubmission = null;
+    showScreen("entry");
+  });
 });
 
 function escapeHtml(str) {
