@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TriageOS 3.1</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #008080;
+    font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #window {
+    width: 440px;
+    background: #c0c0c0;
+    border: 2px solid #dfdfdf;
+    box-shadow:
+      inset -1px -1px 0 #000,
+      inset 1px 1px 0 #fff,
+      inset -2px -2px 0 #808080,
+      inset 2px 2px 0 #dfdfdf;
+    padding: 2px;
+  }
+  #titlebar {
+    background: #000080;
+    color: #fff;
+    font-weight: bold;
+    padding: 3px 6px;
+  }
+  #menubar {
+    background: #c0c0c0;
+    border-bottom: 1px solid #808080;
+    padding: 2px 6px;
+    display: flex;
+    gap: 12px;
+  }
+  .screen { padding: 12px; }
+  .field-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .field-row label { width: 140px; }
+  input[type=text], select {
+    flex: 1;
+    border: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    padding: 2px 4px;
+    background: #fff;
+    font-family: inherit;
+    font-size: inherit;
+  }
+  button {
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    padding: 4px 14px;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+  }
+  button:active {
+    border-color: #808080 #fff #fff #808080;
+  }
+  .button-row { text-align: right; }
+  #progress-bar {
+    border: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    height: 18px;
+    margin: 10px 0;
+    background: #fff;
+  }
+  #progress-fill {
+    height: 100%;
+    background: #000080;
+    width: 0%;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+  table th, table td { border: 1px solid #808080; padding: 3px 6px; text-align: left; font-size: 12px; }
+  .banner { padding: 8px; font-weight: bold; text-align: center; margin-top: 10px; }
+  .banner.approve { background: #00aa00; color: #fff; }
+  .banner.deny { background: #aa0000; color: #fff; }
+</style>
+</head>
+<body>
+  <div id="desktop">
+    <div id="window">
+      <div id="titlebar"><span id="titlebar-text">TriageOS 3.1 — New Ticket</span></div>
+      <div id="menubar"><span>File</span><span>Edit</span><span>Help</span></div>
+
+      <div id="screen-entry" class="screen">
+        <form id="ticket-form">
+          <div class="field-row">
+            <label for="requesterName">Requester Name:</label>
+            <input type="text" id="requesterName" name="requesterName">
+          </div>
+          <div class="field-row">
+            <label for="department">Department:</label>
+            <select id="department" name="department"></select>
+          </div>
+          <div class="field-row">
+            <label for="issueCategory">Issue Category:</label>
+            <select id="issueCategory" name="issueCategory"></select>
+          </div>
+          <div class="field-row">
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority"></select>
+          </div>
+          <div class="field-row">
+            <label for="officeAddress">Office Address:</label>
+            <input type="text" id="officeAddress" name="officeAddress">
+          </div>
+          <div class="button-row">
+            <button type="submit" id="submit-btn">Submit Ticket</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="screen-submitted" class="screen" hidden>
+        <p id="processing-text">Processing request...</p>
+        <div id="progress-bar"><div id="progress-fill"></div></div>
+        <p id="submitted-text" hidden></p>
+      </div>
+
+      <div id="screen-staff" class="screen" hidden>
+        <div id="staff-content"></div>
+        <div class="button-row">
+          <button type="button" id="new-ticket-btn">New Ticket</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+</script>
+</body>
+</html>
