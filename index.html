@@ -137,6 +137,68 @@
     </div>
   </div>
 <script>
+// Staff briefing (not shown to visitors): Priya Shah from Finance is working
+// from a downtown branch office. Her laptop can't connect to the VPN, which
+// is blocking her from submitting quarterly numbers before today's deadline.
+// She's already restarted her laptop twice — no luck. Everyone else at her
+// branch is fine; it's just her connection.
+
+const SCENARIO = {
+  fields: {
+    requesterName: { correct: ["priya", "shah"] },
+    department: {
+      correct: "Finance",
+      options: ["Finance", "Accounting", "Sales", "Engineering", "Marketing", "HR", "Facilities", "IT"]
+    },
+    issueCategory: {
+      correct: "Network/VPN",
+      options: ["Network/VPN", "Hardware", "Software", "Account Access", "Email", "Printing"]
+    },
+    priority: {
+      correct: "High",
+      options: ["Low", "Medium", "High", "Critical"]
+    },
+    officeAddress: { correct: ["455", "market"] }
+  }
+};
+
+const FIELD_LABELS = [
+  { key: "requesterName", label: "Requester Name" },
+  { key: "department", label: "Department" },
+  { key: "issueCategory", label: "Issue Category" },
+  { key: "priority", label: "Priority" },
+  { key: "officeAddress", label: "Office Address" }
+];
+
+const CORRECT_DISPLAY = {
+  requesterName: "Priya Shah",
+  officeAddress: "455 Market Street"
+};
+
+function normalize(str) {
+  return (str || "").toLowerCase().replace(/[^\w\s]/g, "").trim();
+}
+
+function gradeTextField(value, requiredTokens) {
+  const normalized = normalize(value);
+  return requiredTokens.every(token => normalized.includes(token));
+}
+
+function gradeDropdownField(value, correct) {
+  return value === correct;
+}
+
+function gradeSubmission(submission) {
+  const results = {
+    requesterName: gradeTextField(submission.requesterName, SCENARIO.fields.requesterName.correct),
+    department: gradeDropdownField(submission.department, SCENARIO.fields.department.correct),
+    issueCategory: gradeDropdownField(submission.issueCategory, SCENARIO.fields.issueCategory.correct),
+    priority: gradeDropdownField(submission.priority, SCENARIO.fields.priority.correct),
+    officeAddress: gradeTextField(submission.officeAddress, SCENARIO.fields.officeAddress.correct)
+  };
+  const score = Object.values(results).filter(Boolean).length;
+  return { results, score };
+}
 </script>
 </body>
 </html>
