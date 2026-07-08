@@ -26,13 +26,15 @@ Researched against `roadrunner`'s real triage model: HVAC job identification the
 |---|---|---|---|
 | Full Name | `requesterName` | Text | tokens: `["marcus", "webb"]`, display "Marcus Webb" |
 | Phone Number | `phoneNumber` | Text | tokens: `["555", "0138"]`, display "(479) 555-0138" |
-| Service Address | `officeAddress` (key kept as-is — hardcoded in `components/TicketForm.tsx:7` as the field the live Google Address Validation call keys off of) | Text | tokens: `["212", "maple"]`, display "212 Maple Ridge Court" |
+| Service Address | `officeAddress` (key kept as-is — hardcoded in `components/TicketForm.tsx:7` as the field the live Google Address Validation call keys off of) | Text | tokens: `["212", "maple", "fayetteville", "72701"]`, display "212 Maple Ridge Court, Fayetteville, AR 72701" |
 | System Type | `systemType` | Dropdown | options: Furnace, **Boiler**, Heat Pump, Air Conditioner, Mini-Split AC, Geothermal, Water Heater, Thermostat — correct: "Boiler" |
 | Job Type | `issueCategory` | Dropdown | options: No Cool, **No Heat**, Boiler Service, Estimate / Replacement, Duct Cleaning, Thermostat Install — correct: "No Heat" |
 
 Grading/threshold is unchanged generic logic (`components/StaffReveal.tsx:30`, `score / fields.length >= 0.8`) — 5 fields means the same 4/5 approve bar as the original scenario.
 
-**Staff roleplay briefing:** Marcus Webb, home alone at 212 Maple Ridge Court. His boiler stopped producing heat overnight — no warm radiators anywhere, no hot water either. He reset it and checked the pilot light himself, no luck. It's 34°F outside and dropping into the 20s tonight; he's worried about pipes freezing. It's never given him trouble before — it just died last night (this is the "No Heat" repair signal, as opposed to routine "Boiler Service" maintenance on a working system — the intended trap, since "Boiler Service" sounds right for a boiler problem but is actually the wrong job-type bucket). If asked about cooling/AC, it's the dead of winter — not the issue ("No Cool" is a plain seasonal decoy). Phone (479) 555-0138 is given only if the visitor asks for it.
+**Staff roleplay briefing:** Marcus Webb, home alone at 212 Maple Ridge Court, Fayetteville, AR 72701 (area code 479 matches — Fayetteville is in Netic's real Paschal service area). His boiler stopped producing heat overnight — no warm radiators anywhere, no hot water either. He reset it and checked the pilot light himself, no luck. It's 34°F outside and dropping into the 20s tonight; he's worried about pipes freezing. It's never given him trouble before — it just died last night (this is the "No Heat" repair signal, as opposed to routine "Boiler Service" maintenance on a working system — the intended trap, since "Boiler Service" sounds right for a boiler problem but is actually the wrong job-type bucket). If asked about cooling/AC, it's the dead of winter — not the issue ("No Cool" is a plain seasonal decoy). Phone (479) 555-0138 and the full address (city/state/zip) are given only if the visitor asks for them.
+
+**Address grading:** the correct-answer tokens require city and zip in addition to street number/name (`["212", "maple", "fayetteville", "72701"]`) — a visitor who only catches "212 Maple Ridge Court" without asking for city/state/zip is graded wrong on that field, matching how a real intake would need the full mailing address, not just the street.
 
 ## Default scenario
 

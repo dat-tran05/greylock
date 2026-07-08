@@ -1,11 +1,11 @@
 {
   "id": "marcus-noheat",
   "name": "Marcus Webb — No Heat",
-  "staffBriefing": "Marcus Webb is home alone at 212 Maple Ridge Court. His boiler stopped producing heat overnight — no warm radiators anywhere, no hot water either. He reset it and checked the pilot light himself, no luck. It's 34°F outside and dropping into the 20s tonight; he's worried about pipes freezing. It's never given him trouble before — it just died last night (this signals a 'No Heat' repair call, not routine 'Boiler Service' maintenance on a working system). If asked about cooling or AC, remind them it's the dead of winter — that's not the issue. Give his phone number only if asked.",
+  "staffBriefing": "Marcus Webb is home alone at 212 Maple Ridge Court, Fayetteville, AR 72701. His boiler stopped producing heat overnight — no warm radiators anywhere, no hot water either. He reset it and checked the pilot light himself, no luck. It's 34°F outside and dropping into the 20s tonight; he's worried about pipes freezing. It's never given him trouble before — it just died last night (this signals a 'No Heat' repair call, not routine 'Boiler Service' maintenance on a working system). If asked about cooling or AC, remind them it's the dead of winter — that's not the issue. Give his phone number and full address (including city/state/zip) only if asked.",
   "fields": [
     { "key": "requesterName", "label": "Full Name", "type": "text", "correctTokens": ["marcus", "webb"], "correctDisplay": "Marcus Webb" },
     { "key": "phoneNumber", "label": "Phone Number", "type": "text", "correctTokens": ["555", "0138"], "correctDisplay": "(479) 555-0138" },
-    { "key": "officeAddress", "label": "Service Address", "type": "text", "correctTokens": ["212", "maple"], "correctDisplay": "212 Maple Ridge Court" },
+    { "key": "officeAddress", "label": "Service Address", "type": "text", "correctTokens": ["212", "maple", "fayetteville", "72701"], "correctDisplay": "212 Maple Ridge Court, Fayetteville, AR 72701" },
     { "key": "systemType", "label": "System Type", "type": "dropdown", "options": ["Furnace", "Boiler", "Heat Pump", "Air Conditioner", "Mini-Split AC", "Geothermal", "Water Heater", "Thermostat"], "correct": "Boiler" },
     { "key": "issueCategory", "label": "Job Type", "type": "dropdown", "options": ["No Cool", "No Heat", "Boiler Service", "Estimate / Replacement", "Duct Cleaning", "Thermostat Install"], "correct": "No Heat" }
   ]
