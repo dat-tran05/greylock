@@ -20,17 +20,20 @@ Researched against `roadrunner`'s real triage model: HVAC job identification the
 
 **Company framing:** fictional HVAC company "Hearthstone Home Comfort" (no direct Netic branding inside the roleplay — Netic branding lives in the app chrome instead, per the rebrand below).
 
-**Fields** (5, same shape/count as the original scenario):
+**Fields** (4 — Phone Number was dropped per follow-up direction):
 
 | Field | Key | Type | Correct answer |
 |---|---|---|---|
 | Full Name | `requesterName` | Text | tokens: `["dat", "tran"]`, display "Dat Tran" |
-| Phone Number | `phoneNumber` | Text | tokens: `["767", "1349"]`, display "(469) 767-1349" |
 | Service Address | `officeAddress` (key kept as-is — hardcoded in `components/TicketForm.tsx:7` as the field the live Google Address Validation call keys off of) | Text | tokens: `["2 jackson", "san francisco", "94111"]`, display "2 Jackson Street, San Francisco, CA 94111" |
 | System Type | `systemType` | Dropdown | options: Furnace, **Boiler**, Heat Pump, Air Conditioner, Mini-Split AC, Geothermal, Water Heater, Thermostat — correct: "Boiler" |
 | Job Type | `issueCategory` | Dropdown | options: No Cool, **No Heat**, Boiler Service, Estimate / Replacement, Duct Cleaning, Thermostat Install — correct: "No Heat" |
 
-Grading/threshold is unchanged generic logic (`components/StaffReveal.tsx:30`, `score / fields.length >= 0.8`) — 5 fields means the same 4/5 approve bar as the original scenario.
+Grading/threshold is unchanged generic logic (`components/StaffReveal.tsx:30`, `score / fields.length >= 0.8`). With only 4 fields, this bar is stricter than before: 3/4 = 75% now fails (deny), so every field must be correct to approve — the original 5-field scenario tolerated exactly one miss (4/5 = 80%), this one tolerates none.
+
+**Form validation on submit:** `components/TicketForm.tsx` now blocks submission if *any* field is empty (text or dropdown), not just the address — previously a visitor could submit with only the address filled in. Empty fields are outlined in red with a generic "Please fill in every field before submitting" message, cleared as each field is edited. This check runs before the address-validation network call, so an incomplete form never reaches the API.
+
+**Address validation hardening:** `lib/address-validation.ts` now also treats `verdict.hasUnconfirmedComponents`, `verdict.hasInferredComponents`, and a non-empty `result.address.unresolvedTokens` as invalid, in addition to the existing `addressComplete`/`validationGranularity` checks. This directly targets the duplicate-street-name failure mode: a street-only input (no city) can otherwise resolve confidently to a *wrong* city that happens to share the street name, because Google infers the missing context rather than confirming it. Requiring no inferred/unconfirmed components means the visitor actually had to supply enough context (city/state/zip) for Google to confirm the real address, not just guess one.
 
 **Staff roleplay briefing:** Dat Tran, home alone at 2 Jackson Street, San Francisco, CA 94111 (Jackson Square, near the Embarcadero — a real, locally-recognizable address for a booth at a SF-area tech fair). Their boiler stopped producing heat overnight — no warm radiators anywhere, no hot water either. They reset it and checked the pilot light themselves, no luck. It's a damp, foggy 48°F outside and the house feels freezing without any heat (SF's mild climate doesn't get pipe-freezing cold, so the urgency comes from the house being genuinely cold and no heat source at all, not a freeze-damage risk). It's never given them trouble before — it just died last night (this is the "No Heat" repair signal, as opposed to routine "Boiler Service" maintenance on a working system — the intended trap, since "Boiler Service" sounds right for a boiler problem but is actually the wrong job-type bucket). If asked about cooling/AC, it's the dead of winter — not the issue ("No Cool" is a plain seasonal decoy). Phone (469) 767-1349 and the full address (city/state/zip) are given only if the visitor asks for them.
 

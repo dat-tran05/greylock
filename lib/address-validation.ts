@@ -28,10 +28,23 @@ export async function checkAddressValid(
     }
 
     const data = await res.json();
-    const verdict = data?.result?.verdict;
+    const result = data?.result;
+    const verdict = result?.verdict;
     if (!verdict) {
       console.warn("Address Validation API returned an unexpected shape; failing open");
       return true;
+    }
+
+    // Unconfirmed/inferred components mean Google had to guess at parts it
+    // couldn't verify (e.g. a city it assumed because none was given) rather
+    // than confirming what was actually typed. This is exactly the
+    // duplicate-street-name failure mode — a street-only input can otherwise
+    // resolve confidently to the wrong city. Same for unresolved tokens:
+    // input Google couldn't place anywhere at all.
+    if (verdict.hasUnconfirmedComponents === true) return false;
+    if (verdict.hasInferredComponents === true) return false;
+    if (Array.isArray(result?.address?.unresolvedTokens) && result.address.unresolvedTokens.length > 0) {
+      return false;
     }
 
     if (verdict.addressComplete === true) return true;
