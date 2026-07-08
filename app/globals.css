@@ -17,3 +17,28 @@ body { margin: 0; }
   0% { transform: translate(0, 0) scale(1); opacity: 1; }
   100% { transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
 }
+
+.field-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.field-row label { width: 140px; }
+input[type=text], select {
+  flex: 1;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  padding: 2px 4px;
+  background: #fff;
+  font-family: inherit;
+  font-size: inherit;
+}
+input.error-outline { border-color: #aa0000; outline: 2px solid #aa0000; }
+.field-error { color: #aa0000; font-size: 12px; margin: 4px 0 0; }
+button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #808080 #808080 #fff;
+  padding: 4px 14px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+button:active { border-color: #808080 #fff #fff #808080; }
+.button-row { text-align: right; }
