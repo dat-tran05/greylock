@@ -1,0 +1,12 @@
+{
+  "id": "priya-vpn",
+  "name": "Priya Shah — VPN Outage",
+  "staffBriefing": "Priya Shah from Finance is working from a downtown branch office. Her laptop can't connect to the VPN, which is blocking her from submitting quarterly numbers before today's deadline. She's already restarted her laptop twice — no luck. Everyone else at her branch is fine; it's just her connection.",
+  "fields": [
+    { "key": "requesterName", "label": "Requester Name", "type": "text", "correctTokens": ["priya", "shah"], "correctDisplay": "Priya Shah" },
+    { "key": "department", "label": "Department", "type": "dropdown", "options": ["Finance", "Accounting", "Sales", "Engineering", "Marketing", "HR", "Facilities", "IT"], "correct": "Finance" },
+    { "key": "issueCategory", "label": "Issue Category", "type": "dropdown", "options": ["Network/VPN", "Hardware", "Software", "Account Access", "Email", "Printing"], "correct": "Network/VPN" },
+    { "key": "priority", "label": "Priority", "type": "dropdown", "options": ["Low", "Medium", "High", "Critical"], "correct": "High" },
+    { "key": "officeAddress", "label": "Office Address", "type": "text", "correctTokens": ["455", "market"], "correctDisplay": "455 Market Street" }
+  ]
+}
