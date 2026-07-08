@@ -1,4 +1,4 @@
-# Marcus Webb "No Heat" Scenario + Netic Rebrand — Design Spec
+# Dat Tran "No Heat" Scenario + Netic Rebrand — Design Spec
 
 ## Purpose
 
@@ -14,7 +14,7 @@ This is a content + branding addendum to the already-implemented multi-scenario 
 - No new field types (e.g. a dedicated "phone" type) — phone number is a plain `Text` field graded the same way as name/address.
 - No changes to `docs/superpowers/**` history (prior specs/plans) or `.superpowers/sdd/**` scratch artifacts — those are historical records, not live branding surface.
 
-## Scenario content: "Marcus Webb — No Heat"
+## Scenario content: "Dat Tran — No Heat"
 
 Researched against `roadrunner`'s real triage model: HVAC job identification there is **System Type × Service-vs-Maintenance intent** (e.g. `store_job_type_id`, `job_type_screening_prompt`, the FURN/BOIL/HP/AC system-type list in `triage_prompt.py`), not a flat "job type" list. "Priority" was considered and rejected — it's a static per-job-type backend attribute (`job_type_priority` table) automatically derived once job type is known in production, not something an agent independently extracts from the customer, so it wouldn't test anything real in the booth game.
 
@@ -24,15 +24,15 @@ Researched against `roadrunner`'s real triage model: HVAC job identification the
 
 | Field | Key | Type | Correct answer |
 |---|---|---|---|
-| Full Name | `requesterName` | Text | tokens: `["marcus", "webb"]`, display "Marcus Webb" |
-| Phone Number | `phoneNumber` | Text | tokens: `["555", "0138"]`, display "(415) 555-0138" |
+| Full Name | `requesterName` | Text | tokens: `["dat", "tran"]`, display "Dat Tran" |
+| Phone Number | `phoneNumber` | Text | tokens: `["767", "1349"]`, display "(469) 767-1349" |
 | Service Address | `officeAddress` (key kept as-is — hardcoded in `components/TicketForm.tsx:7` as the field the live Google Address Validation call keys off of) | Text | tokens: `["2 jackson", "san francisco", "94111"]`, display "2 Jackson Street, San Francisco, CA 94111" |
 | System Type | `systemType` | Dropdown | options: Furnace, **Boiler**, Heat Pump, Air Conditioner, Mini-Split AC, Geothermal, Water Heater, Thermostat — correct: "Boiler" |
 | Job Type | `issueCategory` | Dropdown | options: No Cool, **No Heat**, Boiler Service, Estimate / Replacement, Duct Cleaning, Thermostat Install — correct: "No Heat" |
 
 Grading/threshold is unchanged generic logic (`components/StaffReveal.tsx:30`, `score / fields.length >= 0.8`) — 5 fields means the same 4/5 approve bar as the original scenario.
 
-**Staff roleplay briefing:** Marcus Webb, home alone at 2 Jackson Street, San Francisco, CA 94111 (Jackson Square, near the Embarcadero — a real, locally-recognizable address for a booth at a SF-area tech fair). His boiler stopped producing heat overnight — no warm radiators anywhere, no hot water either. He reset it and checked the pilot light himself, no luck. It's a damp, foggy 48°F outside and the house feels freezing without any heat (SF's mild climate doesn't get pipe-freezing cold, so the urgency comes from the house being genuinely cold and no heat source at all, not a freeze-damage risk). It's never given him trouble before — it just died last night (this is the "No Heat" repair signal, as opposed to routine "Boiler Service" maintenance on a working system — the intended trap, since "Boiler Service" sounds right for a boiler problem but is actually the wrong job-type bucket). If asked about cooling/AC, it's the dead of winter — not the issue ("No Cool" is a plain seasonal decoy). Phone (415) 555-0138 and the full address (city/state/zip) are given only if the visitor asks for them.
+**Staff roleplay briefing:** Dat Tran, home alone at 2 Jackson Street, San Francisco, CA 94111 (Jackson Square, near the Embarcadero — a real, locally-recognizable address for a booth at a SF-area tech fair). Their boiler stopped producing heat overnight — no warm radiators anywhere, no hot water either. They reset it and checked the pilot light themselves, no luck. It's a damp, foggy 48°F outside and the house feels freezing without any heat (SF's mild climate doesn't get pipe-freezing cold, so the urgency comes from the house being genuinely cold and no heat source at all, not a freeze-damage risk). It's never given them trouble before — it just died last night (this is the "No Heat" repair signal, as opposed to routine "Boiler Service" maintenance on a working system — the intended trap, since "Boiler Service" sounds right for a boiler problem but is actually the wrong job-type bucket). If asked about cooling/AC, it's the dead of winter — not the issue ("No Cool" is a plain seasonal decoy). Phone (469) 767-1349 and the full address (city/state/zip) are given only if the visitor asks for them.
 
 **Address grading:** the correct-answer tokens require city and zip in addition to the street (`["2 jackson", "san francisco", "94111"]`) — a visitor who only catches "2 Jackson Street" without asking for city/state/zip is graded wrong on that field. The street token is the compound `"2 jackson"` rather than a bare `"2"` — a single digit is too weak a substring match (it would trivially match unrelated numbers); anchoring it to `"2 jackson"` requires the number and street name together, while still tolerating minor punctuation/spacing differences.
 
