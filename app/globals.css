@@ -58,3 +58,12 @@ table th, table td { border: 1px solid #808080; padding: 3px 6px; text-align: le
 .banner { padding: 8px; font-weight: bold; text-align: center; margin-top: 10px; }
 .banner.approve { background: #00aa00; color: #fff; }
 .banner.deny { background: #aa0000; color: #fff; }
+
+.scenario-switcher {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 11px;
+  padding: 1px 2px;
+  z-index: 10;
+}
