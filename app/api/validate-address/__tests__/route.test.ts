@@ -1,10 +1,15 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { POST } from "../route";
 import * as addressValidation from "../../../../lib/address-validation";
 
 describe("POST /api/validate-address", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.stubEnv("GOOGLE_MAPS_API_KEY", "test-key");
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
   it("returns { valid: true } when checkAddressValid resolves true", async () => {
