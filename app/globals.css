@@ -67,3 +67,25 @@ table th, table td { border: 1px solid #808080; padding: 3px 6px; text-align: le
   padding: 1px 2px;
   z-index: 10;
 }
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: #008080;
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+  font-size: 13px;
+}
+#desktop { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+#window {
+  width: 440px;
+  background: #c0c0c0;
+  border: 2px solid #dfdfdf;
+  box-shadow:
+    inset -1px -1px 0 #000,
+    inset 1px 1px 0 #fff,
+    inset -2px -2px 0 #808080,
+    inset 2px 2px 0 #dfdfdf;
+  padding: 2px;
+}
+#titlebar { background: #000080; color: #fff; font-weight: bold; padding: 3px 6px; }
+#menubar { background: #c0c0c0; border-bottom: 1px solid #808080; padding: 2px 6px; display: flex; gap: 12px; }
