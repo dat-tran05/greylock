@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TriageOS 3.1",
+  title: "NeticOS 3.1",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

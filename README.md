@@ -1,6 +1,9 @@
-# TriageOS
+# NeticOS
 
 Retro Windows 3.1-styled booth game for the Greylock tech fair, built with Next.js.
+Default scenario is "Marcus Webb — No Heat", an HVAC job-triage puzzle grounded in
+Netic's real home-services data model; "Priya Shah — VPN Outage" is kept as a second,
+switchable scenario.
 
 ## Setup
 
@@ -28,6 +31,7 @@ npm run dev
 
 ## Adding a new scenario
 
-Add a new JSON file under `scenarios/`, matching the shape of `scenarios/priya-vpn.json`,
+Add a new JSON file under `scenarios/`, matching the shape of `scenarios/marcus-noheat.json`,
 then add it to the `RAW_SCENARIOS` array in `lib/scenarios.ts`. It will appear in the
-scenario switcher automatically.
+scenario switcher automatically. The first entry in `RAW_SCENARIOS` is the default active
+scenario on load.

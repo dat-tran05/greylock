@@ -1,4 +1,5 @@
 import { FieldType, type FieldDef } from "./grading";
+import marcusNoHeatRaw from "../scenarios/marcus-noheat.json";
 import priyaVpnRaw from "../scenarios/priya-vpn.json";
 
 export interface ScenarioData {
@@ -93,6 +94,6 @@ export function buildScenarioRegistry(rawList: unknown[]): ScenarioEntry[] {
   return entries;
 }
 
-const RAW_SCENARIOS: unknown[] = [priyaVpnRaw];
+const RAW_SCENARIOS: unknown[] = [marcusNoHeatRaw, priyaVpnRaw];
 
 export const SCENARIOS: ScenarioEntry[] = buildScenarioRegistry(RAW_SCENARIOS);

@@ -7,7 +7,7 @@ import { ProcessingScreen } from "../components/ProcessingScreen";
 import { StaffReveal } from "../components/StaffReveal";
 import { ScenarioSwitcher } from "../components/ScenarioSwitcher";
 
-const SCENARIO_STORAGE_KEY = "triageos.scenarioId";
+const SCENARIO_STORAGE_KEY = "neticos.scenarioId";
 
 type Screen = "entry" | "submitted" | "staff";
 
@@ -62,7 +62,7 @@ export default function Page() {
       <ScenarioSwitcher entries={SCENARIOS} activeId={activeScenarioId} onChange={handleScenarioChange} />
       <div id="window">
         <div id="titlebar">
-          <span>{screen === "staff" ? "TriageOS 3.1 — Staff Review" : "TriageOS 3.1 — New Ticket"}</span>
+          <span>{screen === "staff" ? "NeticOS 3.1 — Staff Review" : "NeticOS 3.1 — New Ticket"}</span>
         </div>
         <div id="menubar"><span>File</span><span>Edit</span><span>Help</span></div>
 
