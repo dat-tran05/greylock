@@ -42,3 +42,13 @@ button {
 }
 button:active { border-color: #808080 #fff #fff #808080; }
 .button-row { text-align: right; }
+
+.screen { padding: 12px; position: relative; }
+#progress-bar {
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  height: 18px;
+  margin: 10px 0;
+  background: #fff;
+}
+#progress-fill { height: 100%; background: #000080; }
