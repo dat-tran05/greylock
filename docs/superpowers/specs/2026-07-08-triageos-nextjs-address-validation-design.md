@@ -42,7 +42,7 @@ This supersedes the offline-only constraint from the original spec (`docs/superp
   - Sets it as active.
   - Persists the choice to `localStorage` (survives refresh on the booth laptop).
   - Resets the form back to the entry screen.
-- Grading, address-validation-triggered fireworks, and staff reveal all read from whichever scenario is currently active. Adding a new scenario later requires only adding a new JSON file — no code changes.
+- Grading, address-validation-triggered fireworks, and staff reveal all read from whichever scenario is currently active. Adding a new scenario later requires adding a new JSON file under `scenarios/`, then adding it to the `RAW_SCENARIOS` array in `lib/scenarios.ts` — no other code changes.
 
 ## Data flow (submit path)
 

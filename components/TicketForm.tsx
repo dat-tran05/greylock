@@ -20,6 +20,9 @@ export function TicketForm({
 
   function setValue(key: string, value: string) {
     setValues((prev) => ({ ...prev, [key]: value }));
+    if (key === ADDRESS_FIELD_KEY) {
+      setAddressError(false);
+    }
   }
 
   async function handleSubmit(event: FormEvent) {

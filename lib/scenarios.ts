@@ -15,6 +15,9 @@ export interface ScenarioEntry {
 }
 
 function parseField(raw: any): FieldDef {
+  if (typeof raw?.key !== "string" || typeof raw?.label !== "string") {
+    throw new Error(`Invalid field "${raw?.key}": missing/non-string key or label`);
+  }
   if (raw.type === FieldType.Text) {
     if (!Array.isArray(raw.correctTokens) || typeof raw.correctDisplay !== "string") {
       throw new Error(`Invalid text field "${raw.key}": missing correctTokens/correctDisplay`);
