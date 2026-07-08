@@ -26,7 +26,7 @@ export default function Page() {
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.altKey && event.shiftKey && event.key.toUpperCase() === "R") {
+      if (event.metaKey && event.shiftKey && event.key.toUpperCase() === "G") {
         event.preventDefault();
         setScreen("staff");
       }

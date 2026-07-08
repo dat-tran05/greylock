@@ -23,7 +23,7 @@ npm run dev
 
 ## Staff runbook
 
-- `Alt+Shift+R` reveals the graded answer key (staff-only) after a submission.
+- `Cmd+Shift+G` reveals the graded answer key (staff-only) after a submission.
 - The scenario dropdown (top-right) switches the active scenario; selection persists
   per booth laptop via `localStorage`.
 - Click "New Ticket" before the next visitor approaches to reset the form and hide
