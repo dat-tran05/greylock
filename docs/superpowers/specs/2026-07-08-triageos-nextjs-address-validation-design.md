@@ -27,10 +27,16 @@ This supersedes the offline-only constraint from the original spec (`docs/superp
 ## Scenario system
 
 - `scenarios/*.json` — one file per scenario, each containing: staff briefing text, field definitions, and correct-display strings. Same shape as the current inline `SCENARIO` object in `index.html`.
-- **Field types:** each field declares a `type`, currently one of:
-  - `"text"` — free-text input, graded by required substring tokens (e.g. Requester Name, Office Address today).
-  - `"dropdown"` — `<select>` with an `options` list, graded by exact match (e.g. Department, Issue Category, Priority today).
-  - The renderer and grader both switch on `type`, so adding a new type later (e.g. a number or date field) means adding one new case to each, not restructuring the schema. No other types are built now — just these two.
+- **Field types:** each field declares a `type`, drawn from a `FieldType` enum in `lib/scenarios.ts`:
+  ```ts
+  enum FieldType {
+    Text = "text",
+    Dropdown = "dropdown",
+  }
+  ```
+  - `Text` — free-text input, graded by required substring tokens (e.g. Requester Name, Office Address today).
+  - `Dropdown` — `<select>` with an `options` list, graded by exact match (e.g. Department, Issue Category, Priority today).
+  - Scenario JSON stores the field's string value (`"text"` / `"dropdown"`); it's parsed against the `FieldType` enum on load, so an unrecognized value fails loudly (falls back to the default scenario per the error-handling section) instead of silently rendering nothing. The renderer and grader both switch exhaustively over `FieldType`, so adding a new case later (e.g. a number or date field) means extending the enum plus one switch arm in each, not restructuring the schema. No other types are built now — just these two.
 - `lib/scenarios.ts` — loads all JSON files from `scenarios/` at build time and exports a registry: `{ id, name, data }[]`.
 - **Scenario switcher UI:** a small `<select>` pinned to the top-right of the page, outside the retro window chrome (reads as a booth "control panel," not part of the in-universe ticket UI). Lists scenario names only — never correct answers. Selecting a scenario:
   - Sets it as active.
