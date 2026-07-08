@@ -27,7 +27,7 @@ export function StaffReveal({
   }
 
   const { results, score } = gradeSubmission(scenario.fields, submission);
-  const approve = score / scenario.fields.length >= 0.8;
+  const approve = score === scenario.fields.length;
 
   return (
     <div className="screen">

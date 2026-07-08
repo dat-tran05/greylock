@@ -29,7 +29,7 @@ Researched against `roadrunner`'s real triage model: HVAC job identification the
 | System Type | `systemType` | Dropdown | options: Furnace, **Boiler**, Heat Pump, Air Conditioner, Mini-Split AC, Geothermal, Water Heater, Thermostat — correct: "Boiler" |
 | Job Type | `issueCategory` | Dropdown | options: No Cool, **No Heat**, Boiler Service, Estimate / Replacement, Duct Cleaning, Thermostat Install — correct: "No Heat" |
 
-Grading/threshold is unchanged generic logic (`components/StaffReveal.tsx:30`, `score / fields.length >= 0.8`). With only 4 fields, this bar is stricter than before: 3/4 = 75% now fails (deny), so every field must be correct to approve — the original 5-field scenario tolerated exactly one miss (4/5 = 80%), this one tolerates none.
+Approve threshold is now 100% (`components/StaffReveal.tsx:30`, `score === scenario.fields.length`) — every field must be correct to approve, no tolerance for a miss. This was originally an 80% bar (carried over from the original 5-field scenario's 4/5), tightened to exact match per follow-up direction: the address-validation API is expected to be reliable, so there's no need to reserve slack in the scoring for external failure modes.
 
 **Form validation on submit:** `components/TicketForm.tsx` now blocks submission if *any* field is empty (text or dropdown), not just the address — previously a visitor could submit with only the address filled in. Empty fields are outlined in red with a generic "Please fill in every field before submitting" message, cleared as each field is edited. This check runs before the address-validation network call, so an incomplete form never reaches the API.
 
