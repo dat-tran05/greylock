@@ -45,7 +45,8 @@ button:active { border-color: #808080 #fff #fff #808080; }
 .button-row { text-align: right; }
 
 .screen { padding: 12px; position: relative; }
-.tab-content { height: 290px; overflow-y: auto; }
+.tab-content { height: 260px; overflow-y: auto; display: flex; flex-direction: column; }
+.tab-content .button-row { margin-top: auto; padding-top: 10px; }
 #progress-bar {
   border: 2px solid;
   border-color: #808080 #fff #fff #808080;
@@ -59,7 +60,7 @@ table { width: 100%; border-collapse: collapse; margin: 10px 0; }
 table th, table td { border: 1px solid #808080; padding: 3px 6px; text-align: left; font-size: 12px; }
 
 .directory-results {
-  max-height: 180px;
+  max-height: 150px;
   overflow-y: auto;
   border: 2px solid;
   border-color: #808080 #fff #fff #808080;
