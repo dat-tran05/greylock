@@ -20,35 +20,37 @@ export function CustomerDirectory({ onSelect }: { onSelect: (customerId: string)
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {results.map((customer) => (
-            <tr key={customer.id}>
-              <td>{customer.name}</td>
-              <td>{customer.phone}</td>
-              <td>{customer.address}</td>
-              <td>
-                <button type="button" onClick={() => onSelect(customer.id)}>
-                  Select
-                </button>
-              </td>
-            </tr>
-          ))}
-          {results.length === 0 && (
+      <div className="directory-results">
+        <table>
+          <thead>
             <tr>
-              <td colSpan={4}>No matches found.</td>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th></th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {results.map((customer) => (
+              <tr key={customer.id}>
+                <td>{customer.name}</td>
+                <td>{customer.phone}</td>
+                <td>{customer.address}</td>
+                <td>
+                  <button type="button" onClick={() => onSelect(customer.id)}>
+                    Select
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {results.length === 0 && (
+              <tr>
+                <td colSpan={4}>No matches found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       <div className="button-row">
         <button type="button" onClick={() => onSelect(NEW_CUSTOMER_VALUE)}>
           New Customer

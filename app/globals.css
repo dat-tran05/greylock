@@ -56,6 +56,20 @@ button:active { border-color: #808080 #fff #fff #808080; }
 
 table { width: 100%; border-collapse: collapse; margin: 10px 0; }
 table th, table td { border: 1px solid #808080; padding: 3px 6px; text-align: left; font-size: 12px; }
+
+.directory-results {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  background: #fff;
+}
+.directory-results table { margin: 0; }
+.directory-results thead th {
+  position: sticky;
+  top: 0;
+  background: #c0c0c0;
+}
 .banner { padding: 8px; font-weight: bold; text-align: center; margin-top: 10px; }
 .banner.approve { background: #00aa00; color: #fff; }
 .banner.deny { background: #aa0000; color: #fff; }
