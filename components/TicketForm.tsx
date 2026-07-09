@@ -16,35 +16,23 @@ export function TicketForm({
   onSubmit: (submission: Record<string, string>) => void;
 }) {
   const [values, setValues] = useState<Record<string, string>>({});
-  const [errorFields, setErrorFields] = useState<Set<string>>(new Set());
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   function setValue(key: string, value: string) {
     setValues((prev) => ({ ...prev, [key]: value }));
-    if (errorFields.has(key)) {
-      setErrorFields((prev) => {
-        const next = new Set(prev);
-        next.delete(key);
-        return next;
-      });
-      setErrorMessage(null);
-    }
+    setErrorMessage(null);
   }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setErrorMessage(null);
 
-    const emptyFields = scenario.fields
-      .map((field) => field.key)
-      .filter((key) => !(values[key] ?? "").trim());
-    if (emptyFields.length > 0) {
-      setErrorFields(new Set(emptyFields));
+    const hasEmptyField = scenario.fields.some((field) => !(values[field.key] ?? "").trim());
+    if (hasEmptyField) {
       setErrorMessage(MISSING_FIELDS_ERROR);
       return;
     }
-    setErrorFields(new Set());
 
     const address = values[ADDRESS_FIELD_KEY].trim();
     setSubmitting(true);
@@ -56,7 +44,6 @@ export function TicketForm({
       });
       const { valid } = await res.json();
       if (!valid) {
-        setErrorFields(new Set([ADDRESS_FIELD_KEY]));
         setErrorMessage(INVALID_ADDRESS_ERROR);
         return;
       }
@@ -67,14 +54,13 @@ export function TicketForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={errorMessage ? "form-error" : ""}>
       {scenario.fields.map((field) => (
         <div className="field-row" key={field.key}>
           <label htmlFor={field.key}>{field.label}:</label>
           {field.type === FieldType.Dropdown ? (
             <select
               id={field.key}
-              className={errorFields.has(field.key) ? "error-outline" : ""}
               value={values[field.key] ?? ""}
               onChange={(e) => setValue(field.key, e.target.value)}
             >
@@ -89,7 +75,6 @@ export function TicketForm({
             <input
               id={field.key}
               type="text"
-              className={errorFields.has(field.key) ? "error-outline" : ""}
               value={values[field.key] ?? ""}
               onChange={(e) => setValue(field.key, e.target.value)}
             />

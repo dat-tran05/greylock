@@ -29,7 +29,8 @@ input[type=text], select {
   font-family: inherit;
   font-size: inherit;
 }
-input.error-outline, select.error-outline { border-color: #aa0000; outline: 2px solid #aa0000; }
+form { border: 2px solid transparent; }
+form.form-error { border-color: #aa0000; outline: 2px solid #aa0000; }
 .field-error { color: #aa0000; font-size: 12px; margin: 4px 0 0; }
 button {
   background: #c0c0c0;
