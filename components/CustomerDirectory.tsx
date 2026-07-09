@@ -9,7 +9,7 @@ export function CustomerDirectory({ onSelect }: { onSelect: (customerId: string)
   const results = searchCustomers(query);
 
   return (
-    <div className="screen">
+    <div className="screen tab-content">
       <div className="field-row">
         <label htmlFor="customer-search">Search:</label>
         <input

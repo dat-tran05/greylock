@@ -63,7 +63,7 @@ export function TicketForm({
 
   if (customerField && !customerResolved) {
     return (
-      <div className="screen">
+      <div className="screen tab-content">
         <p>Is this regarding an existing customer?</p>
         <div className="button-row">
           <button type="button" onClick={onRequestDirectory}>
@@ -78,7 +78,7 @@ export function TicketForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`screen${errorMessage ? " form-error" : ""}`}>
+    <form onSubmit={handleSubmit} className={`screen tab-content${errorMessage ? " form-error" : ""}`}>
       {customerField && (
         <p className="customer-indicator">
           Customer:{" "}

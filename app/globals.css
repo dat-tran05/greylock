@@ -45,6 +45,7 @@ button:active { border-color: #808080 #fff #fff #808080; }
 .button-row { text-align: right; }
 
 .screen { padding: 12px; position: relative; }
+.tab-content { height: 290px; overflow-y: auto; }
 #progress-bar {
   border: 2px solid;
   border-color: #808080 #fff #fff #808080;
