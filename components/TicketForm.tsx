@@ -113,6 +113,7 @@ export function TicketForm({
               <input
                 id={field.key}
                 type="text"
+                placeholder={field.placeholder}
                 value={values[field.key] ?? ""}
                 onChange={(e) => setValue(field.key, e.target.value)}
               />

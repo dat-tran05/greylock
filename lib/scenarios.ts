@@ -23,12 +23,16 @@ function parseField(raw: any): FieldDef {
     if (!Array.isArray(raw.correctTokens) || typeof raw.correctDisplay !== "string") {
       throw new Error(`Invalid text field "${raw.key}": missing correctTokens/correctDisplay`);
     }
+    if (raw.placeholder !== undefined && typeof raw.placeholder !== "string") {
+      throw new Error(`Invalid text field "${raw.key}": placeholder must be a string`);
+    }
     return {
       key: raw.key,
       label: raw.label,
       type: FieldType.Text,
       correctTokens: raw.correctTokens,
       correctDisplay: raw.correctDisplay,
+      placeholder: raw.placeholder,
     };
   }
   if (raw.type === FieldType.Dropdown) {

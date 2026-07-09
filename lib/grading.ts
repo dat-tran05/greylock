@@ -19,6 +19,7 @@ export interface TextFieldDef {
   type: FieldType.Text;
   correctTokens: string[];
   correctDisplay: string;
+  placeholder?: string;
 }
 
 export interface DropdownFieldDef {
