@@ -1,0 +1,8 @@
+[
+  { "id": "dat-tran", "name": "Dat Tran", "phone": "(469) 767-1349", "address": "2 Jackson Street, San Francisco, CA 94111" },
+  { "id": "priya-shah", "name": "Priya Shah", "phone": "(415) 555-0142", "address": "455 Market Street, San Francisco, CA 94105" },
+  { "id": "dan-tran", "name": "Dan Tran", "phone": "(415) 555-0187", "address": "88 Hyde Street, San Francisco, CA 94102" },
+  { "id": "maria-lopez", "name": "Maria Lopez", "phone": "(415) 555-0163", "address": "1200 Van Ness Avenue, San Francisco, CA 94109" },
+  { "id": "james-okafor", "name": "James Okafor", "phone": "(628) 555-0128", "address": "350 Rhode Island Street, San Francisco, CA 94103" },
+  { "id": "wei-chen", "name": "Wei Chen", "phone": "(415) 555-0176", "address": "3600 California Street, San Francisco, CA 94118" }
+]

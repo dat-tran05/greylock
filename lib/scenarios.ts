@@ -43,6 +43,17 @@ function parseField(raw: any): FieldDef {
       correct: raw.correct,
     };
   }
+  if (raw.type === FieldType.CustomerLookup) {
+    if (raw.correctCustomerId !== null && typeof raw.correctCustomerId !== "string") {
+      throw new Error(`Invalid customer-lookup field "${raw.key}": correctCustomerId must be a string or null`);
+    }
+    return {
+      key: raw.key,
+      label: raw.label,
+      type: FieldType.CustomerLookup,
+      correctCustomerId: raw.correctCustomerId,
+    };
+  }
   throw new Error(`Unknown field type "${raw.type}" for field "${raw.key}"`);
 }
 

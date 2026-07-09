@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { SCENARIOS } from "../lib/scenarios";
+import { FieldType, NEW_CUSTOMER_VALUE, NAME_FIELD_KEY, ADDRESS_FIELD_KEY } from "../lib/grading";
+import { findCustomer } from "../lib/customers";
 import { TicketForm } from "../components/TicketForm";
+import { CustomerDirectory } from "../components/CustomerDirectory";
 import { ProcessingScreen } from "../components/ProcessingScreen";
 import { StaffReveal } from "../components/StaffReveal";
 import { ScenarioSwitcher } from "../components/ScenarioSwitcher";
@@ -10,10 +13,13 @@ import { ScenarioSwitcher } from "../components/ScenarioSwitcher";
 const SCENARIO_STORAGE_KEY = "neticos.scenarioId";
 
 type Screen = "entry" | "submitted" | "staff";
+type Tab = "ticket" | "directory";
 
 export default function Page() {
   const [activeScenarioId, setActiveScenarioId] = useState(SCENARIOS[0].id);
   const [screen, setScreen] = useState<Screen>("entry");
+  const [activeTab, setActiveTab] = useState<Tab>("ticket");
+  const [ticketValues, setTicketValues] = useState<Record<string, string>>({});
   const [lastSubmission, setLastSubmission] = useState<Record<string, string> | null>(null);
   const [ticketNumber, setTicketNumber] = useState<string | null>(null);
 
@@ -36,13 +42,36 @@ export default function Page() {
   }, []);
 
   const activeScenario = SCENARIOS.find((s) => s.id === activeScenarioId)!.data;
+  const customerField = activeScenario.fields.find((f) => f.type === FieldType.CustomerLookup);
 
   function handleScenarioChange(id: string) {
     setActiveScenarioId(id);
     window.localStorage.setItem(SCENARIO_STORAGE_KEY, id);
+    setTicketValues({});
+    setActiveTab("ticket");
     setLastSubmission(null);
     setTicketNumber(null);
     setScreen("entry");
+  }
+
+  function handleValueChange(key: string, value: string) {
+    setTicketValues((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function handleSelectCustomer(customerId: string) {
+    if (!customerField) return;
+    setTicketValues((prev) => {
+      const next = { ...prev, [customerField.key]: customerId };
+      if (customerId !== NEW_CUSTOMER_VALUE) {
+        const record = findCustomer(customerId);
+        if (record) {
+          next[NAME_FIELD_KEY] = record.name;
+          next[ADDRESS_FIELD_KEY] = record.address;
+        }
+      }
+      return next;
+    });
+    setActiveTab("ticket");
   }
 
   function handleSubmit(submission: Record<string, string>) {
@@ -52,6 +81,8 @@ export default function Page() {
   }
 
   function handleNewTicket() {
+    setTicketValues({});
+    setActiveTab("ticket");
     setLastSubmission(null);
     setTicketNumber(null);
     setScreen("entry");
@@ -66,7 +97,37 @@ export default function Page() {
         </div>
         <div id="menubar"><span>File</span><span>Edit</span><span>Help</span></div>
 
-        {screen === "entry" && <TicketForm scenario={activeScenario} onSubmit={handleSubmit} />}
+        {screen === "entry" && customerField && (
+          <div className="tab-strip">
+            <button
+              type="button"
+              className={activeTab === "ticket" ? "tab active" : "tab"}
+              onClick={() => setActiveTab("ticket")}
+            >
+              New Ticket
+            </button>
+            <button
+              type="button"
+              className={activeTab === "directory" ? "tab active" : "tab"}
+              onClick={() => setActiveTab("directory")}
+            >
+              Customer Directory
+            </button>
+          </div>
+        )}
+
+        {screen === "entry" && activeTab === "ticket" && (
+          <TicketForm
+            scenario={activeScenario}
+            values={ticketValues}
+            onValueChange={handleValueChange}
+            onSubmit={handleSubmit}
+            onRequestDirectory={() => setActiveTab("directory")}
+          />
+        )}
+        {screen === "entry" && activeTab === "directory" && customerField && (
+          <CustomerDirectory onSelect={handleSelectCustomer} />
+        )}
         {screen === "submitted" && ticketNumber && <ProcessingScreen ticketNumber={ticketNumber} />}
         {screen === "staff" && (
           <StaffReveal

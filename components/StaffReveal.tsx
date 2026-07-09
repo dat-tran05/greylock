@@ -1,8 +1,15 @@
 "use client";
 
-import { FieldType } from "../lib/grading";
+import { FieldType, NEW_CUSTOMER_VALUE } from "../lib/grading";
 import { gradeSubmission } from "../lib/grading";
 import type { ScenarioData } from "../lib/scenarios";
+import { findCustomer } from "../lib/customers";
+
+function customerDisplayName(customerId: string | null | undefined): string {
+  if (!customerId) return "(blank)";
+  if (customerId === NEW_CUSTOMER_VALUE) return "New Customer";
+  return findCustomer(customerId)?.name ?? `Unknown (${customerId})`;
+}
 
 export function StaffReveal({
   scenario,
@@ -38,8 +45,18 @@ export function StaffReveal({
         </thead>
         <tbody>
           {scenario.fields.map((field) => {
-            const correctDisplay = field.type === FieldType.Text ? field.correctDisplay : field.correct;
-            const submittedValue = submission[field.key]?.trim() ? submission[field.key] : "(blank)";
+            let correctDisplay: string;
+            let submittedValue: string;
+            if (field.type === FieldType.Text) {
+              correctDisplay = field.correctDisplay;
+              submittedValue = submission[field.key]?.trim() ? submission[field.key] : "(blank)";
+            } else if (field.type === FieldType.Dropdown) {
+              correctDisplay = field.correct;
+              submittedValue = submission[field.key]?.trim() ? submission[field.key] : "(blank)";
+            } else {
+              correctDisplay = field.correctCustomerId ? `${customerDisplayName(field.correctCustomerId)} (existing)` : "New Customer";
+              submittedValue = customerDisplayName(submission[field.key]);
+            }
             return (
               <tr key={field.key}>
                 <td>{field.label}</td>
