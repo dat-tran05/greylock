@@ -4,5 +4,11 @@
   { "id": "dan-tran", "name": "Dan Tran", "phone": "(415) 555-0187", "address": "88 Hyde Street, San Francisco, CA 94102" },
   { "id": "maria-lopez", "name": "Maria Lopez", "phone": "(415) 555-0163", "address": "1200 Van Ness Avenue, San Francisco, CA 94109" },
   { "id": "james-okafor", "name": "James Okafor", "phone": "(628) 555-0128", "address": "350 Rhode Island Street, San Francisco, CA 94103" },
-  { "id": "wei-chen", "name": "Wei Chen", "phone": "(415) 555-0176", "address": "3600 California Street, San Francisco, CA 94118" }
+  { "id": "wei-chen", "name": "Wei Chen", "phone": "(415) 555-0176", "address": "3600 California Street, San Francisco, CA 94118" },
+  { "id": "sameer-das", "name": "Sameer Das", "phone": "(415) 555-0154", "address": "742 Divisadero Street, San Francisco, CA 94117" },
+  { "id": "jessica-zhu", "name": "Jessica Zhu", "phone": "(628) 555-0119", "address": "88 King Street, San Francisco, CA 94107" },
+  { "id": "davin-jeong", "name": "Davin Jeong", "phone": "(415) 555-0193", "address": "500 Terry A Francois Blvd, San Francisco, CA 94158" },
+  { "id": "cassie-wu", "name": "Cassie Wu", "phone": "(415) 555-0161", "address": "1450 Fillmore Street, San Francisco, CA 94115" },
+  { "id": "olivia-bennett", "name": "Olivia Bennett", "phone": "(415) 555-0108", "address": "601 Van Ness Avenue, San Francisco, CA 94102" },
+  { "id": "marcus-webb", "name": "Marcus Webb", "phone": "(415) 555-0134", "address": "233 Post Street, San Francisco, CA 94108" }
 ]

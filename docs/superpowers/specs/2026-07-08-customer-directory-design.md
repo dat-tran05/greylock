@@ -19,7 +19,7 @@ Add a searchable customer directory (grounded in the real `confirm_location`/`cr
 interface CustomerRecord { id: string; name: string; phone: string; address: string; }
 ```
 
-Seeded with ~6 records: Dat Tran (matching the "Dat Tran — No Heat" scenario's correct Name/Address answers), Priya Shah (ties the two existing scenarios into one shared world — pure flavor, no functional effect on her VPN scenario since it doesn't use this feature), plus a handful of SF-area decoys including one deliberately similar-sounding name (e.g. "Dan Tran") so search actually tests careful listening rather than "type the first three letters and grab the first result."
+Seeded with 12 records: Dat Tran (matching the "Dat Tran — No Heat" scenario's correct Name/Address answers), Priya Shah (ties the two existing scenarios into one shared world — pure flavor, no functional effect on her VPN scenario since it doesn't use this feature), plus SF-area decoys including one deliberately similar-sounding name ("Dan Tran") so search actually tests careful listening rather than "type the first three letters and grab the first result."
 
 ## Schema extension
 
