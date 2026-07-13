@@ -56,6 +56,14 @@ Verified (via `gradeSubmission` directly): all 5 accepted customers submitted wi
 
 The approve threshold (`score === fields.length`, unchanged) now requires all 5 correct for this scenario, not 4.
 
+### Outdated directory addresses (further follow-up)
+
+Reconsidered immediately after: Service Address should *not* derive from the selected customer after all — the correct address is always the fixed "2 Jackson Street, San Francisco, CA 94111", regardless of which of the 5 approved people is identified as the caller. `officeAddress` dropped its `deriveFromCustomer: "address"` flag and reverted to its original static `correctTokens`/`correctDisplay`. `requesterName` keeps `deriveFromCustomer: "name"` — only the address reverted, name stays interchangeable across all 5.
+
+This is deliberate: it models directory records going stale when people move. Everyone except Dat Tran has a directory address other than 2 Jackson Street, so trusting the auto-prefilled address without confirming it against the roleplay is now a trap — a visitor who selects, say, Jessica Zhu and submits her prefilled "88 King Street..." unedited gets Service Address marked wrong, even though the Customer field passed. The staff briefing was updated to spell this out for whoever's running the booth: convey the current address (2 Jackson Street) verbally regardless of which name is being roleplayed, and don't let the visitor just trust the directory prefill.
+
+Verified via `gradeSubmission`: all 5 accepted customers score 5/5 when Service Address is the fixed "2 Jackson Street..." value; submitting each customer's own untouched directory address instead scores 5/5 only for Dat Tran (whose directory record happens to already be current) and 4/5 for the other 4 (their directory addresses are stale, so Service Address grades wrong on its own while Customer and Full Name still pass).
+
 ## New Ticket flow
 
 Ticket field values move from `TicketForm`'s internal state up to `app/page.tsx` (as `ticketValues`), since both the ticket form and the directory tab need to read/write the same in-progress submission and coordinate a tab switch.
