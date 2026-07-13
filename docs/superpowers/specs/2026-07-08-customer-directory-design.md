@@ -30,17 +30,29 @@ interface CustomerLookupFieldDef {
   key: string;
   label: string;
   type: FieldType.CustomerLookup;
-  correctCustomerId: string | null; // null = correct answer is "new customer, not in directory"
+  correctCustomerId: string | string[] | null; // null = "new customer" is correct; string[] = any of these ids are equally correct
 }
 ```
 
-`FieldDef` union gains this variant. `gradeField` gains a matching switch arm: the submission value for this field is either a customer id (e.g. `"dat-tran"`) or the literal string `"NEW"`; correct iff it equals `correctCustomerId ?? "NEW"`. `lib/scenarios.ts`'s `parseField` gains matching validation (require `correctCustomerId` to be a string or `null`).
+`FieldDef` union gains this variant. `gradeField` gains a matching switch arm: the submission value for this field is either a customer id (e.g. `"dat-tran"`) or the literal string `"NEW"`; correct iff it equals a single `correctCustomerId`, is included in a `correctCustomerId` array, or (when `null`) equals `"NEW"`. `lib/scenarios.ts`'s `parseField` gains matching validation (require `correctCustomerId` to be a string, an array of strings, or `null`).
 
-This becomes a scenario's 5th graded field when present. Priya's scenario simply omits it — her flow, rendering, and grading are entirely unaffected. Adding it to `scenarios/marcus-noheat.json` as the first field:
+This becomes a scenario's 5th graded field when present. Priya's scenario simply omits it — her flow, rendering, and grading are entirely unaffected. `scenarios/marcus-noheat.json` accepts any of 5 interchangeable customers (per follow-up direction — see "Interchangeable customers" below), as the first field:
 
 ```json
-{ "key": "customerId", "label": "Customer", "type": "customer-lookup", "correctCustomerId": "dat-tran" }
+{ "key": "customerId", "label": "Customer", "type": "customer-lookup", "correctCustomerId": ["dat-tran", "sameer-das", "davin-jeong", "cassie-wu", "jessica-zhu"] }
 ```
+
+### Interchangeable customers (follow-up)
+
+Accepting multiple customer ids as correct raised a question: if a visitor selects, say, Jessica Zhu instead of Dat Tran, should Full Name/Service Address then grade against Jessica's own record, or stay fixed to Dat Tran's? Confirmed: whichever approved customer is selected becomes the reference for Name/Address too — all 5 are fully interchangeable, and correctly identifying any one of them as "the existing customer" is a full pass.
+
+This required `TextFieldDef` to gain an optional `deriveFromCustomer?: "name" | "address"` flag. When set and a valid (non-`"NEW"`) customer is selected, that field's correctness compares the submitted value against `selectedCustomer.name`/`selectedCustomer.address` (via the same lenient `normalize(...).includes(...)` check) instead of the field's static `correctTokens`. It falls back to the static `correctTokens`/`correctDisplay` when no valid customer is selected (e.g. the "new customer" path) — which for this scenario is always the wrong path anyway, since all 5 accepted people are already in the directory.
+
+This makes `gradeField`/`gradeSubmission` cross-field-aware for the first time: `gradeSubmission` resolves the submitted customer-lookup value once, looks up the matching `CustomerRecord`, and threads it into every subsequent `gradeField` call so `deriveFromCustomer` fields can reference it. `lib/grading.ts` now imports `lib/customers.ts` (no cycle — `customers.ts` has no dependency back on `grading.ts`).
+
+`components/StaffReveal.tsx` updated to match: the Customer field's "correct" column lists all accepted names (e.g. "Dat Tran, Sameer Das, Davin Jeong, Cassie Wu, Jessica Zhu (existing)"), and a `deriveFromCustomer` text field's "correct" column shows the actually-selected customer's real name/address when one was chosen, falling back to the static `correctDisplay` otherwise.
+
+Verified (via `gradeSubmission` directly): all 5 accepted customers submitted with their own real info each score 5/5; a directory customer *not* in the accepted list (Priya Shah) fails only the Customer field (4/5); selecting an accepted customer but typing a different accepted customer's name/address fails Name and Address independently (3/5); the "new customer" path fails the Customer field since all 5 approved people are already in the directory (4/5). Priya's own scenario (no customer-lookup field at all) regression-checked unaffected.
 
 The approve threshold (`score === fields.length`, unchanged) now requires all 5 correct for this scenario, not 4.
 

@@ -11,6 +11,12 @@ function customerDisplayName(customerId: string | null | undefined): string {
   return findCustomer(customerId)?.name ?? `Unknown (${customerId})`;
 }
 
+function acceptedCustomersDisplay(correctCustomerId: string | string[] | null): string {
+  if (correctCustomerId === null) return "New Customer";
+  const ids = Array.isArray(correctCustomerId) ? correctCustomerId : [correctCustomerId];
+  return `${ids.map((id) => customerDisplayName(id)).join(", ")} (existing)`;
+}
+
 export function StaffReveal({
   scenario,
   submission,
@@ -36,6 +42,11 @@ export function StaffReveal({
   const { results, score } = gradeSubmission(scenario.fields, submission);
   const approve = score === scenario.fields.length;
 
+  const customerField = scenario.fields.find((f) => f.type === FieldType.CustomerLookup);
+  const submittedCustomerId = customerField ? submission[customerField.key] : undefined;
+  const selectedCustomer =
+    submittedCustomerId && submittedCustomerId !== NEW_CUSTOMER_VALUE ? findCustomer(submittedCustomerId) : undefined;
+
   return (
     <div className="screen">
       <p>{`Ticket #${ticketNumber} — Score: ${score}/${scenario.fields.length}`}</p>
@@ -48,13 +59,16 @@ export function StaffReveal({
             let correctDisplay: string;
             let submittedValue: string;
             if (field.type === FieldType.Text) {
-              correctDisplay = field.correctDisplay;
+              correctDisplay =
+                field.deriveFromCustomer && selectedCustomer
+                  ? selectedCustomer[field.deriveFromCustomer]
+                  : field.correctDisplay;
               submittedValue = submission[field.key]?.trim() ? submission[field.key] : "(blank)";
             } else if (field.type === FieldType.Dropdown) {
               correctDisplay = field.correct;
               submittedValue = submission[field.key]?.trim() ? submission[field.key] : "(blank)";
             } else {
-              correctDisplay = field.correctCustomerId ? `${customerDisplayName(field.correctCustomerId)} (existing)` : "New Customer";
+              correctDisplay = acceptedCustomersDisplay(field.correctCustomerId);
               submittedValue = customerDisplayName(submission[field.key]);
             }
             return (

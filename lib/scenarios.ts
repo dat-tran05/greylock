@@ -26,6 +26,9 @@ function parseField(raw: any): FieldDef {
     if (raw.placeholder !== undefined && typeof raw.placeholder !== "string") {
       throw new Error(`Invalid text field "${raw.key}": placeholder must be a string`);
     }
+    if (raw.deriveFromCustomer !== undefined && raw.deriveFromCustomer !== "name" && raw.deriveFromCustomer !== "address") {
+      throw new Error(`Invalid text field "${raw.key}": deriveFromCustomer must be "name" or "address"`);
+    }
     return {
       key: raw.key,
       label: raw.label,
@@ -33,6 +36,7 @@ function parseField(raw: any): FieldDef {
       correctTokens: raw.correctTokens,
       correctDisplay: raw.correctDisplay,
       placeholder: raw.placeholder,
+      deriveFromCustomer: raw.deriveFromCustomer,
     };
   }
   if (raw.type === FieldType.Dropdown) {
@@ -48,8 +52,12 @@ function parseField(raw: any): FieldDef {
     };
   }
   if (raw.type === FieldType.CustomerLookup) {
-    if (raw.correctCustomerId !== null && typeof raw.correctCustomerId !== "string") {
-      throw new Error(`Invalid customer-lookup field "${raw.key}": correctCustomerId must be a string or null`);
+    const isValidCorrectCustomerId =
+      raw.correctCustomerId === null ||
+      typeof raw.correctCustomerId === "string" ||
+      (Array.isArray(raw.correctCustomerId) && raw.correctCustomerId.every((id: unknown) => typeof id === "string"));
+    if (!isValidCorrectCustomerId) {
+      throw new Error(`Invalid customer-lookup field "${raw.key}": correctCustomerId must be a string, string[], or null`);
     }
     return {
       key: raw.key,
