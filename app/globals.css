@@ -94,7 +94,7 @@ body {
 }
 #desktop { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
 #window {
-  width: 440px;
+  width: 500px;
   background: #c0c0c0;
   border: 2px solid #dfdfdf;
   box-shadow:
