@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { FieldType, NEW_CUSTOMER_VALUE, ADDRESS_FIELD_KEY } from "../lib/grading";
+import { FieldType, NEW_CUSTOMER_VALUE, ADDRESS_FIELD_KEY, gradeSubmission } from "../lib/grading";
 import type { ScenarioData } from "../lib/scenarios";
 import { findCustomer } from "../lib/customers";
 
 const INVALID_ADDRESS_ERROR = "Input not valid — please check and try again";
-const MISSING_FIELDS_ERROR = "Please fill in every field before submitting";
+const INCORRECT_FIELDS_ERROR = "Please review your answers before submitting";
 
 export function TicketForm({
   scenario,
@@ -36,9 +36,9 @@ export function TicketForm({
     event.preventDefault();
     setErrorMessage(null);
 
-    const hasEmptyField = scenario.fields.some((field) => !(values[field.key] ?? "").trim());
-    if (hasEmptyField) {
-      setErrorMessage(MISSING_FIELDS_ERROR);
+    const { score } = gradeSubmission(scenario.fields, values);
+    if (score !== scenario.fields.length) {
+      setErrorMessage(INCORRECT_FIELDS_ERROR);
       return;
     }
 
