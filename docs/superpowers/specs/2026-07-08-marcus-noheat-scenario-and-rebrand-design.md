@@ -27,7 +27,7 @@ Researched against `roadrunner`'s real triage model: HVAC job identification the
 | Full Name | `requesterName` | Text | tokens: `["dat", "tran"]`, display "Dat Tran" |
 | Service Address | `officeAddress` (key kept as-is — hardcoded in `components/TicketForm.tsx:7` as the field the live Google Address Validation call keys off of) | Text | tokens: `["2 jackson", "san francisco", "94111"]`, display "2 Jackson Street, San Francisco, CA 94111" |
 | System Type | `systemType` | Dropdown | options: Furnace, **Boiler**, Air Conditioner, Water Heater, Thermostat — correct: "Boiler" |
-| Job Type | `issueCategory` | Dropdown | options: No Cool, **No Heat**, Boiler Service, Estimate / Replacement, Duct Cleaning, Thermostat Install — correct: "No Heat" |
+| Job Type | `issueCategory` | Dropdown | options: No Cool, **No Heat**, Estimate / Replacement, Duct Cleaning, Thermostat Install — correct: "No Heat" (Boiler Service, the original trap option, removed 2026-07-13) |
 
 Approve threshold is now 100% (`components/StaffReveal.tsx:30`, `score === scenario.fields.length`) — every field must be correct to approve, no tolerance for a miss. This was originally an 80% bar (carried over from the original 5-field scenario's 4/5), tightened to exact match per follow-up direction: the address-validation API is expected to be reliable, so there's no need to reserve slack in the scoring for external failure modes.
 
