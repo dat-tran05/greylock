@@ -41,6 +41,7 @@ Delivered as one file so it can be opened directly in a browser (double-click or
 - Dropdown fields (Department, Issue Category, Priority): exact match required.
 - Requester Name: case-insensitive; passes if the submitted value contains both "priya" and "shah" as separate tokens (order-independent).
 - Office Address: case-insensitive, punctuation-normalized; passes if it contains the street number "455" and the word "market".
+- Normalization (softened 2026-07-13): punctuation is treated as a word separator rather than deleted (so "Street,San" still splits into two words), runs of whitespace collapse to one space, and common address abbreviations are canonicalized on both sides of the comparison — "St"/"Street", "Ave"/"Avenue", "Blvd"/"Boulevard", etc., plus "California"/"CA". Typing "2 Jackson St." or "…, California 94111" now grades the same as the spelled-out record. Deliberately *not* aliased: "SF" for "San Francisco" (visitors must catch the actual city) and ordinal/number words ("Two" ≠ "2"). Covered by `lib/grading.test.ts` (`npm test`, vitest).
 - Overall score = count of passing fields out of 5.
 - Recommendation banner: score ≥ 4 → "APPROVE — hand over a ticket"; score ≤ 3 → "DENY — close but not quite". This is a suggestion only; staff make the final call.
 

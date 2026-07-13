@@ -49,8 +49,37 @@ export interface CustomerLookupFieldDef {
 
 export type FieldDef = TextFieldDef | DropdownFieldDef | CustomerLookupFieldDef;
 
+// Canonical spellings for words players plausibly abbreviate or expand when
+// typing an address. Both the typed value and the expected answer are mapped,
+// so customer records may store either form ("Street" or "St", "CA" or
+// "California"). Whole-word matches only — "st" as a street suffix, not "st"
+// inside another word.
+const WORD_ALIASES: Record<string, string> = {
+  st: "street",
+  ave: "avenue",
+  av: "avenue",
+  blvd: "boulevard",
+  rd: "road",
+  dr: "drive",
+  ln: "lane",
+  ct: "court",
+  pl: "place",
+  hwy: "highway",
+  pkwy: "parkway",
+  sq: "square",
+  ter: "terrace",
+  cir: "circle",
+  california: "ca",
+};
+
 export function normalize(str: string): string {
-  return (str || "").toLowerCase().replace(/[^\w\s]/g, "").trim();
+  return (str || "")
+    .toLowerCase()
+    .replace(/[^\w\s]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => WORD_ALIASES[word] ?? word)
+    .join(" ");
 }
 
 function gradeTextField(value: string, field: TextFieldDef, customer: CustomerRecord | undefined): boolean {
@@ -59,7 +88,7 @@ function gradeTextField(value: string, field: TextFieldDef, customer: CustomerRe
     return normalize(value).includes(normalize(expected));
   }
   const normalized = normalize(value);
-  return field.correctTokens.every((token) => normalized.includes(token));
+  return field.correctTokens.every((token) => normalized.includes(normalize(token)));
 }
 
 export function gradeField(value: string, field: FieldDef, customer?: CustomerRecord): boolean {
