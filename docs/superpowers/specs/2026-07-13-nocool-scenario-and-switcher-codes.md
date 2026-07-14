@@ -17,3 +17,9 @@ Mirrors the No Heat scenario's structure (customer-lookup + name/address/system/
 `priya-vpn.json` (the original IT-themed scenario, pre-HVAC-rebrand) is removed from `RAW_SCENARIOS` so the switcher shows exactly NH and NC. The JSON stays on disk; re-importing it in `lib/scenarios.ts` brings it back. A `localStorage` value pointing at the retired id falls back to the default scenario (guarded by the existing `SCENARIOS.some(...)` check).
 
 Verified end-to-end in the running app: switcher renders ["NH", "NC"]; NC flow (directory → select Webb → prefill correct → Air Conditioner + No Cool) submits a ticket; wrong Job Type (No Heat) on the NC case is blocked by grading; NH still loads after switching back.
+
+## Follow-up: NC aligned with NH; Priya deleted (same day)
+
+Direction immediately after the first cut: the Marcus Webb single-customer design is dropped. NC now mirrors NH's customer setup exactly — the same five interchangeable customers (Dat Tran, Sameer Das, Davin Jeong, Cassie Wu, Jessica Zhu) and the same fixed correct address, **2 Jackson Street, San Francisco, CA 94111**, with the same stale-directory-prefill trap (only Dat Tran's record is current). The two cases now differ only in story and correct System Type / Job Type: Boiler + No Heat vs Air Conditioner + No Cool. The thermostat-fiddling decoy in the NC briefing stays.
+
+The file moved from `webb-nocool.json` to `nocool.json` (id `nocool`) since the Webb character no longer exists, and `priya-vpn.json` is deleted outright rather than retired-but-kept — recoverable from git history if ever needed. Priya Shah's *directory* record stays: she remains useful as an in-directory-but-wrong-customer decoy.

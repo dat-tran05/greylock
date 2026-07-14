@@ -1,0 +1,12 @@
+{
+  "id": "nocool",
+  "name": "NC",
+  "staffBriefing": "Whoever you're roleplaying as (Dat Tran, Sameer Das, Davin Jeong, Cassie Wu, or Jessica Zhu) is home alone at 2 Jackson Street, San Francisco, CA 94111 (Jackson Square, near the Embarcadero) — this is their current address regardless of what the Customer Directory has on file for them; some records are outdated because people move. It's an unusually hot, sunny stretch and their air conditioner stopped cooling this morning — the fan runs and air comes out of the vents, but it's warm. They already checked the thermostat (set to cool, fresh batteries) and the filter looks clean, no luck. The house is stuffy and getting hotter through the afternoon. The AC has never given them trouble before — it just quit (this signals a 'No Cool' repair call; don't let the thermostat-fiddling steer the visitor toward the thermostat options — the thermostat is fine). If asked about heating, remind them it's a heat wave — that's not the issue. Give their full current address (including city/state/zip) only if asked — don't let the visitor just trust whatever the directory prefilled.",
+  "fields": [
+    { "key": "customerId", "label": "Customer", "type": "customer-lookup", "correctCustomerId": ["dat-tran", "sameer-das", "davin-jeong", "cassie-wu", "jessica-zhu"] },
+    { "key": "requesterName", "label": "Full Name", "type": "text", "correctTokens": ["dat", "tran"], "correctDisplay": "Dat Tran", "placeholder": "Melisa Tokmak", "deriveFromCustomer": "name" },
+    { "key": "officeAddress", "label": "Service Address", "type": "text", "correctTokens": ["2 jackson", "san francisco", "94111"], "correctDisplay": "2 Jackson Street, San Francisco, CA 94111", "placeholder": "123 Example St, San Francisco, CA 94110" },
+    { "key": "systemType", "label": "System Type", "type": "dropdown", "options": ["Furnace", "Boiler", "Air Conditioner", "Water Heater", "Thermostat"], "correct": "Air Conditioner" },
+    { "key": "issueCategory", "label": "Job Type", "type": "dropdown", "options": ["No Cool", "No Heat", "Estimate / Replacement", "Duct Cleaning", "Thermostat Install"], "correct": "No Cool" }
+  ]
+}

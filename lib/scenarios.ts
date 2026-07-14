@@ -1,6 +1,6 @@
 import { FieldType, type FieldDef } from "./grading";
 import marcusNoHeatRaw from "../scenarios/marcus-noheat.json";
-import webbNoCoolRaw from "../scenarios/webb-nocool.json";
+import noCoolRaw from "../scenarios/nocool.json";
 
 export interface ScenarioData {
   id: string;
@@ -117,8 +117,6 @@ export function buildScenarioRegistry(rawList: unknown[]): ScenarioEntry[] {
   return entries;
 }
 
-// priya-vpn.json (the original IT-themed scenario) is retired from the live
-// registry but kept on disk; re-import it here to bring it back.
-const RAW_SCENARIOS: unknown[] = [marcusNoHeatRaw, webbNoCoolRaw];
+const RAW_SCENARIOS: unknown[] = [marcusNoHeatRaw, noCoolRaw];
 
 export const SCENARIOS: ScenarioEntry[] = buildScenarioRegistry(RAW_SCENARIOS);
