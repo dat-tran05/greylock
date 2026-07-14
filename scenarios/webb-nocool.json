@@ -1,0 +1,12 @@
+{
+  "id": "webb-nocool",
+  "name": "NC",
+  "staffBriefing": "You're roleplaying Marcus Webb, at home at 233 Post Street, San Francisco, CA 94108 (Union Square) — unlike the No Heat case, his Customer Directory record is current, so the directory address matches. It's an unusually hot, sunny stretch and his air conditioner stopped cooling this morning — the fan runs and air comes out of the vents, but it's warm. He already checked the thermostat (set to cool, fresh batteries) and the filter looks clean, no luck. The house is stuffy and getting hotter through the afternoon. The AC has never given him trouble before — it just quit (this signals a 'No Cool' repair call; don't let his thermostat-fiddling steer the visitor toward the thermostat options — the thermostat is fine). If asked about heating, remind them it's a heat wave — that's not the issue. Give his full address (including city/state/zip) only if asked.",
+  "fields": [
+    { "key": "customerId", "label": "Customer", "type": "customer-lookup", "correctCustomerId": "marcus-webb" },
+    { "key": "requesterName", "label": "Full Name", "type": "text", "correctTokens": ["marcus", "webb"], "correctDisplay": "Marcus Webb", "placeholder": "Melisa Tokmak", "deriveFromCustomer": "name" },
+    { "key": "officeAddress", "label": "Service Address", "type": "text", "correctTokens": ["233 post", "san francisco", "94108"], "correctDisplay": "233 Post Street, San Francisco, CA 94108", "placeholder": "123 Example St, San Francisco, CA 94110" },
+    { "key": "systemType", "label": "System Type", "type": "dropdown", "options": ["Furnace", "Boiler", "Air Conditioner", "Water Heater", "Thermostat"], "correct": "Air Conditioner" },
+    { "key": "issueCategory", "label": "Job Type", "type": "dropdown", "options": ["No Cool", "No Heat", "Estimate / Replacement", "Duct Cleaning", "Thermostat Install"], "correct": "No Cool" }
+  ]
+}
