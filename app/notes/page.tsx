@@ -57,11 +57,10 @@ const COACHING: Record<string, { title: string; situation: string; tips: string[
   pest: {
     title: "Pest control — carpenter ants",
     situation:
-      "Big black ants pouring out of the deck posts with little piles of sawdust underneath. They tried WD-40 (it's a lubricant, not a pesticide). A raccoon makes a cameo.",
+      "Big black ants pouring out of the deck posts with little piles of sawdust underneath. They tried WD-40 (it's a lubricant, not a pesticide).",
     tips: [
       "NEVER say “carpenter.” Only reveal the tells when asked: big, black, sawdust, and a couple had wings. That combo = Carpenter Ants (wood-destroying) → On-Site Specialist (OSP), not regular Ants on the Standard Quarterly plan.",
       "If they never ask what the ants look like, let them pick “Ants” + “Standard Quarterly” and fail — the reveal is the lesson.",
-      "Drop the raccoon in mid-call (“can they do the raccoon too?”). Raccoons are wildlife — NOT covered. Bait them into “Add to Treatment Plan.”",
     ],
   },
 };

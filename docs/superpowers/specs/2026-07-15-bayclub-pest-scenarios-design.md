@@ -25,9 +25,9 @@ One of the five is a Bay Club member who wants to stop paying for the summer wit
 
 ## PC — `scenarios/pest.json` (id `pest`)
 
-One of the five has big black ants and returning sawdust piles at the deck posts (WD-40 countermeasures notwithstanding), plus a mid-call raccoon stinger.
+One of the five has big black ants and returning sawdust piles at the deck posts (WD-40 countermeasures notwithstanding).
 
-- Classification: **Pest Type: Carpenter Ants** (bait: Ants); **Service Program: On-Site Specialist Inspection (OSP)** (bait: Standard Quarterly Plan (ISP), consistent with the Ants misread); **Raccoon Request: Not Covered — Wildlife** (bait: Add to Treatment Plan, punishing maximal helpfulness).
+- Classification: **Pest Type: Carpenter Ants** (bait: Ants); **Service Program: On-Site Specialist Inspection (OSP)** (bait: Standard Quarterly Plan (ISP), consistent with the Ants misread).
 - The clue ladder (big / black / sawdust / wings) is released only when asked — rewarding the disambiguating questions a real CSR asks.
 
 ## Priya Shah IT case purged
@@ -37,4 +37,4 @@ One of the five has big black ants and returning sawdust piles at the deck posts
 
 ## Testing
 
-No unit tests (per direction). Verification is done by driving the running app in a real browser: switcher renders NH/NC/BC/PC; for BC, selecting a non-Dat customer prefills a stale address and the Cancel+Retention misread is blocked, while Freeze+Membership Team with the corrected 2 Jackson address submits; for PC, the regular-Ants+ISP+raccoon-on-plan combo is blocked while Carpenter Ants+OSP+Not-Covered submits; NH and NC still load. Production build clean.
+No unit tests (per direction). Verification is done by driving the running app in a real browser: switcher renders NH/NC/BC/PC; for BC, selecting a non-Dat customer prefills a stale address and the Cancel+Retention misread is blocked, while Freeze+Membership Team with the corrected 2 Jackson address submits; for PC, the regular-Ants+ISP combo is blocked while Carpenter Ants+OSP submits; NH and NC still load. Production build clean.
