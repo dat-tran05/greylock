@@ -1,0 +1,13 @@
+{
+  "id": "pest",
+  "name": "PC",
+  "staffBriefing": "You're roleplaying Carol Pemberton, a FIRST-TIME caller — she is NOT in the Customer Directory (a search finds nothing; the correct move is the New Customer path). Opening: 'My neighbor Diane says you guys handled her yellowjacket situation with real dignity.' The problem: big black ants coming out of the deck posts, with little piles of sawdust underneath. 'I swept up the sawdust Tuesday. Wednesday, MORE sawdust. Is the deck... producing it? Also I sprayed them with WD-40, which the internet now tells me is not a pesticide, it's a lubricant. So they're fine. They're thriving. They are possibly faster.' Only when asked what the ants look like / how big: 'Honestly? Enormous. Like, gym-membership big. And a couple of them had WINGS.' Big + black + sawdust + wings = CARPENTER ANTS (wood-destroying), which need an On-Site Specialist Inspection — not the standard quarterly plan that regular ants get. Don't volunteer 'carpenter'; reward visitors who ask the disambiguating questions. Mid-call, add the stinger: 'Oh — and while they're out here, there's a raccoon who has OPINIONS about my compost bin. Can they do the raccoon too?' Raccoons are wildlife — NOT covered, the polite answer is no. Her name and address (1298 Haight Street, San Francisco, CA 94117, including city/state/zip) are given only if asked — spell 'Pemberton' if they hesitate.",
+  "fields": [
+    { "key": "customerId", "label": "Customer", "type": "customer-lookup", "correctCustomerId": null },
+    { "key": "requesterName", "label": "Caller Name", "type": "text", "correctTokens": ["carol", "pemberton"], "correctDisplay": "Carol Pemberton", "placeholder": "Melisa Tokmak" },
+    { "key": "officeAddress", "label": "Service Address", "type": "text", "correctTokens": ["1298 haight", "san francisco", "94117"], "correctDisplay": "1298 Haight Street, San Francisco, CA 94117", "placeholder": "123 Example St, San Francisco, CA 94110" },
+    { "key": "pestType", "label": "Pest Type", "type": "dropdown", "options": ["Ants", "Carpenter Ants", "Roaches", "German Roaches", "Termites", "Rodents", "Wasps & Hornets"], "correct": "Carpenter Ants" },
+    { "key": "serviceProgram", "label": "Service Program", "type": "dropdown", "options": ["Standard Quarterly Plan (ISP)", "On-Site Specialist Inspection (OSP)", "Premium Callback", "Mosquito Add-On"], "correct": "On-Site Specialist Inspection (OSP)" },
+    { "key": "raccoonRequest", "label": "Raccoon Request", "type": "dropdown", "options": ["Add to Treatment Plan", "Not Covered — Wildlife", "Schedule Separate Visit", "Transfer to Wildlife Team"], "correct": "Not Covered — Wildlife" }
+  ]
+}
