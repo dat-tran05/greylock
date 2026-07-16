@@ -16,7 +16,7 @@ const UNIVERSAL_TRICKS: string[] = [
   "Make them ask. Never volunteer the name, address, or details up front — a good CSR pulls it out of you. Answer only what you're actually asked.",
   "The service address may be any complete, real address that Google Maps can validate; it does not need to match the scenario or selected customer's stored address.",
   "Directory selections still prefill the customer's stored address, but players may replace it with any other Google Maps-validated address.",
-  "Wrong customer. Search “tran” and both Dat Tran and Dan Tran show up. Any of the five approved people is fine, but Dan Tran is a decoy — not one of them.",
+  "Wrong customer. The directory includes decoy customers. Any of the five approved people is fine, but confirm the caller instead of choosing an unrelated record.",
   "Interrupt. Cut in while they're typing, or trail off mid-sentence and change the subject. See if they keep control of the call.",
   "Speed & nerves. Ramble, go on tangents, be a little flustered. The skill is staying on task and getting the ticket right anyway.",
   "The form is strict for scenario fields. The address is the exception: any Google Maps-validated address is accepted. A red box means something's wrong — but it never says which field.",
