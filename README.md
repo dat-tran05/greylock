@@ -16,6 +16,9 @@ npm run dev
 
 ## Google Maps API key
 
+Every scenario accepts any complete address that passes the Google Address
+Validation API; addresses are not matched against a scenario-specific value.
+
 > **Note:** an earlier key was pasted into a chat session during design and must be
 > treated as compromised. Rotate it in Google Cloud Console, restrict the new key
 > (HTTP referrer or IP) to the Address Validation API only, and put it in
