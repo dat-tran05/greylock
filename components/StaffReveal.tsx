@@ -1,6 +1,6 @@
 "use client";
 
-import { FieldType, NEW_CUSTOMER_VALUE } from "../lib/grading";
+import { ADDRESS_FIELD_KEY, FieldType, NEW_CUSTOMER_VALUE } from "../lib/grading";
 import { gradeSubmission } from "../lib/grading";
 import type { ScenarioData } from "../lib/scenarios";
 import { findCustomer } from "../lib/customers";
@@ -60,7 +60,9 @@ export function StaffReveal({
             let submittedValue: string;
             if (field.type === FieldType.Text) {
               correctDisplay =
-                field.deriveFromCustomer && selectedCustomer
+                field.key === ADDRESS_FIELD_KEY
+                  ? "Any valid address (Google Maps verified)"
+                  : field.deriveFromCustomer && selectedCustomer
                   ? selectedCustomer[field.deriveFromCustomer]
                   : field.correctDisplay;
               submittedValue = submission[field.key]?.trim() ? submission[field.key] : "(blank)";

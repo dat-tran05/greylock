@@ -83,6 +83,13 @@ export function normalize(str: string): string {
 }
 
 function gradeTextField(value: string, field: TextFieldDef, customer: CustomerRecord | undefined): boolean {
+  // The form validates service addresses asynchronously with Google Maps before
+  // accepting a submission. The synchronous scenario grader only needs to
+  // ensure an address was supplied; matching a scenario/customer address here
+  // would incorrectly reject other real, Google-validated addresses.
+  if (field.key === ADDRESS_FIELD_KEY) {
+    return value.trim().length > 0;
+  }
   if (field.deriveFromCustomer && customer) {
     const expected = field.deriveFromCustomer === "name" ? customer.name : customer.address;
     return normalize(value).includes(normalize(expected));

@@ -1,5 +1,5 @@
 import { SCENARIOS } from "../../lib/scenarios";
-import { FieldType, type FieldDef } from "../../lib/grading";
+import { ADDRESS_FIELD_KEY, FieldType, type FieldDef } from "../../lib/grading";
 import { findCustomer } from "../../lib/customers";
 
 // Hidden staff cheat-sheet. Reachable only by typing /notes — not linked
@@ -14,12 +14,12 @@ export const metadata = {
 
 const UNIVERSAL_TRICKS: string[] = [
   "Make them ask. Never volunteer the name, address, or details up front — a good CSR pulls it out of you. Answer only what you're actually asked.",
-  "The address is the #1 trip-up. Say it fast and only once: “2 Jackson Street, San Francisco, nine-four-one-one-one.” See if they ask you to slow down or repeat it back. Bonus: give just “2 Jackson” and stop — do they remember to ask for city/state/zip?",
-  "Prefill trap. If they pick anyone other than Dat Tran from the directory, the address box auto-fills that person's OLD address. The correct answer is ALWAYS 2 Jackson Street — watch for them submitting the stale prefill without fixing it.",
+  "The service address may be any complete, real address that Google Maps can validate; it does not need to match the scenario or selected customer's stored address.",
+  "Directory selections still prefill the customer's stored address, but players may replace it with any other Google Maps-validated address.",
   "Wrong customer. Search “tran” and both Dat Tran and Dan Tran show up. Any of the five approved people is fine, but Dan Tran is a decoy — not one of them.",
   "Interrupt. Cut in while they're typing, or trail off mid-sentence and change the subject. See if they keep control of the call.",
   "Speed & nerves. Ramble, go on tangents, be a little flustered. The skill is staying on task and getting the ticket right anyway.",
-  "The form is strict. Every field must match exactly; submission is blocked until it's all correct, then a ticket number pops. A red box means something's wrong — but it never says which field.",
+  "The form is strict for scenario fields. The address is the exception: any Google Maps-validated address is accepted. A red box means something's wrong — but it never says which field.",
   "Staff reveal: on the ticket screen press Cmd+Shift+G to pull up the graded answer sheet after a submission.",
 ];
 
@@ -74,6 +74,7 @@ function answerFor(field: FieldDef): string {
       return names.length > 1 ? `Any of: ${names.join(", ")}` : names[0];
     }
     case FieldType.Text:
+      if (field.key === ADDRESS_FIELD_KEY) return "Any valid address (Google Maps verified)";
       if (field.deriveFromCustomer === "name") return "The selected customer's name (must match who they picked)";
       if (field.deriveFromCustomer === "address") return `${field.correctDisplay} (or the selected customer's address)`;
       return field.correctDisplay;
