@@ -43,17 +43,6 @@ const COACHING: Record<string, { title: string; situation: string; tips: string[
       "If they ask about heating, it's a heat wave — not the issue.",
     ],
   },
-  bayclub: {
-    title: "Bay Club — membership freeze",
-    situation:
-      "A Bay Club member since 2016 on a grandfathered rate is away for the summer and wants to STOP PAYING for three months without losing that rate.",
-    tips: [
-      "Say “cancel” constantly — but what you actually want is a Freeze/Hold, not a cancellation. That's the whole trap.",
-      "The double trap: if they classify it as “Cancel Membership,” then routing to “Retention Offers” feels correct — but freezes go to the Membership Team. Two wrong dropdowns in a row.",
-      "“Self-Service Portal” looks efficient and modern — also wrong; a freeze needs a human on the Membership team.",
-      "If they start processing a cancellation, panic: “You're not cancelling me right now, are you? DON'T Dale me.”",
-    ],
-  },
   pest: {
     title: "Pest control — carpenter ants",
     situation:
