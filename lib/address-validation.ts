@@ -47,7 +47,9 @@ export async function checkAddressValid(
     const CRITICAL_TYPES = new Set(["street_number", "route", "locality", "administrative_area_level_1", "postal_code"]);
     const components: any[] = result?.address?.addressComponents ?? [];
     const hasUnverifiedCriticalComponent = components.some(
-      (c) => CRITICAL_TYPES.has(c?.componentType) && (c?.confirmationLevel !== "CONFIRMED" || c?.inferred === true)
+      (c) =>
+        CRITICAL_TYPES.has(c?.componentType) &&
+        (c?.confirmationLevel !== "CONFIRMED" || c?.inferred === true || c?.replaced === true)
     );
     if (hasUnverifiedCriticalComponent) return false;
     if (Array.isArray(result?.address?.unresolvedTokens) && result.address.unresolvedTokens.length > 0) {
